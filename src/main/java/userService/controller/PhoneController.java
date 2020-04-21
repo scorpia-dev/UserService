@@ -23,7 +23,7 @@ public class PhoneController {
 	PhoneNumberService phoneNumberService;
 	
 	
-	@PutMapping("/{phoneNumberId}")
+	@PutMapping("/updatePhoneNumber/{phoneNumberId}")
 	public PhoneNumber updateExistingPhoneNumber(@PathVariable @Positive int phoneNumberId,
 			@RequestBody @Validated PhoneNumber phoneNumber) {
 		return phoneNumberService.updatePhoneNumber(phoneNumber, phoneNumberId);
@@ -31,7 +31,7 @@ public class PhoneController {
 	
 
 	
-	@PutMapping("/{userId}/add")
+	@PutMapping("/addNewPhoneNumber/{userId}")
 	public PhoneNumber addNewPhoneNumber(@PathVariable int userId, @Valid @RequestBody PhoneNumber phoneNumber) {
 		return phoneNumberService.addNewPhoneNumber(phoneNumber, userId);
 	}

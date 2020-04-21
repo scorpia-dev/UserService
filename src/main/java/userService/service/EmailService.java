@@ -46,4 +46,9 @@ public class EmailService {
 		return emailRepository.save(existingMail);
 	}
 	
+	public Email getEmailById(int id) {
+		return emailRepository.findById(id).orElseThrow(
+				() -> new EntityNotFoundException("the email with id " + id + " was not found"));
+	}
+	
 }

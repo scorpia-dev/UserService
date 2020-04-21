@@ -22,7 +22,7 @@ public class UserService {
 	public String deleteUser(int userId) {
 			userRepository.delete(userRepository.findById(userId).orElseThrow(
 						() -> new EntityNotFoundException("the user with id " + userId + " was not found")));
-				return "user with id " + userId + " deleted";
+				return "User with id " + userId + " deleted";
 			}
 	
 	

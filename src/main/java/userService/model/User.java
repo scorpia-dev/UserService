@@ -29,20 +29,29 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class User {
 
+	public User(String firstName, String lastName, List<Email> emails, List<PhoneNumber> phoneNumbers) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.emails = emails;
+		this.phoneNumbers = phoneNumbers;
+	}
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name ="userId")
 	private int id;
 
 	@Pattern(regexp = "^[\\p{L} .'-]+$", message = "a name can only contain letters and spaces")
 	@Size(min = 1, max = 30)
+	@NotEmpty(message = "{firstName.notEmpty}")
+	private String firstName;
+	
+	@Pattern(regexp = "^[\\p{L} .'-]+$", message = "a name can only contain letters and spaces")
+	@Size(min = 1, max = 30)
 	@NotEmpty(message = "{lastName.notEmpty}")
 	private String lastName;
 
-	@Pattern(regexp = "^[\\p{L} .'-]+$", message = "a name can only contain letters and spaces")
-	@Size(min = 1, max = 30)
-	@NotEmpty(message = "{firstName.notEmpty}")
-	private String firstName;
+
    
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private List<Email> emails = new ArrayList<Email>();

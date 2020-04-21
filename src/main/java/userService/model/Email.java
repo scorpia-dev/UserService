@@ -27,7 +27,7 @@ public class Email {
 
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
 	@NotEmpty(message = "{mail.notEmpty}")
@@ -42,6 +42,11 @@ public class Email {
 	   public int getUser_id(){
 	        return user.getId();
 	    }
+
+public Email(String mail, User user) {
+		this.mail = mail;
+		this.user = user;
+}
 
 	
 }

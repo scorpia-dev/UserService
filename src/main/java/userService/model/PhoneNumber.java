@@ -41,4 +41,9 @@ public class PhoneNumber {
 	        return user.getId();
 	    }
 
+	public PhoneNumber(String number, User user) {
+		this.number = number;
+		this.user = user;
+}
+
 }

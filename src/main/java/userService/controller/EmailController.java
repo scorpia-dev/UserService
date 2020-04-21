@@ -21,14 +21,16 @@ public class EmailController {
 	@Autowired
 	EmailService emailService;
 	
-	@PutMapping("updateEmail/{mailId}")
+	@PutMapping("/updateEmail/{mailId}")
 public Email updateExistingMail(@PathVariable @Positive int mailId, @RequestBody @Validated Email mail) {
 	return emailService.updateEmail(mail, mailId);
 }
 	
-	@PutMapping("addNewEmail/{userId}")
+	@PutMapping("/addNewEmail/{userId}")
 	public Email addNewEmail(@PathVariable int userId, @Validated @RequestBody Email email) {
 		return emailService.addNewEmail(email, userId);
 	}
+	
+	
 	
 }

@@ -44,51 +44,59 @@ POST - http://localhost:8080/user
 
 * **Read an existing member by their id**
 ```
-GET - http://localhost:8080/user/{userId} i.e.  http://localhost:8080/user/1
+GET - http://localhost:8080/user/{userId} i.e. http://localhost:8080/user/1
  ```
  
  * **Read an existing member by their name**
 ```
-GET - http://localhost:8080/user/{firstName}/{lastlame} i.e.  http://localhost:8080/user/firstname/lastname
+GET - http://localhost:8080/user/{firstName}/{lastName} i.e. http://localhost:8080/user/firstname/lastname
  ```
 * **Delete an existing member**
 ```
-DELETE - http://localhost:8080/user/id/{userId}
+DELETE - http://localhost:8080/user/id/{userId} i.e. http://localhost:8080/user/id/1
 ```
 
 #### Email
 ------
 * **add additional email data**
 ```
-PUT - http://localhost:8080/email/add/{userId}
+PUT - http://localhost:8080/email/add/{userId} i.e. http://localhost:8080/email/add/1
 ```
 ```JSON
 {
-    "firstName": "<first name here>",
-    "lastName": "last name here",
+    "mail": "test@test.com"
 }
 ```
 * **update existing email data**
 ```
-PUT - http://localhost:8080/email/update/{emailId}
+PUT - http://localhost:8080/email/update/{emailId} i.e. http://localhost:8080/email/update/1
+```
+```JSON
+{
+    "mail": "update@test.com"
+}
 ```
 
 #### PhoneNumber
 ------
 * **add additional phone data**
 ```
-PUT - http://localhost:8080/phonenumber/add/{userId}
+PUT - http://localhost:8080/phonenumber/add/{userId} i.e. http://localhost:8080/phonenumber/add/1
 ```
 ```JSON
 {
-    "firstName": "<first name here>",
-    "lastName": "last name here",
+	"number": "12345678910"
 }
 ```
 
 * **update existing phone data**
 ```
-PUT - http://localhost:8080/phonenumber/update/{phoneNumberId}
+PUT - http://localhost:8080/phonenumber/update/{phoneNumberId} i.e. http://localhost:8080/phonenumber/update/1
+```
+```JSON
+{
+	"number": "12345678910"
+}
 ```
 
 

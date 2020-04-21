@@ -1,5 +1,6 @@
 package userService.controller;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class PhoneController {
 	PhoneNumberService phoneNumberService;
 	
 	
-	@PutMapping("/phoneNumber/{phoneNumberId}")
+	@PutMapping("/{phoneNumberId}")
 	public PhoneNumber updateExistingPhoneNumber(@PathVariable @Positive int phoneNumberId,
 			@RequestBody @Validated PhoneNumber phoneNumber) {
 		return phoneNumberService.updatePhoneNumber(phoneNumber, phoneNumberId);
@@ -30,8 +31,8 @@ public class PhoneController {
 	
 
 	
-	@PutMapping("/{userId}/phoneNumber")
-	public PhoneNumber addNewPhoneNumber(@PathVariable int userId, @Validated @RequestBody PhoneNumber phoneNumber) {
+	@PutMapping("/{userId}/add")
+	public PhoneNumber addNewPhoneNumber(@PathVariable int userId, @Valid @RequestBody PhoneNumber phoneNumber) {
 		return phoneNumberService.addNewPhoneNumber(phoneNumber, userId);
 	}
 	

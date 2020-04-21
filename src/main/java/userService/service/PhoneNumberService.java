@@ -19,24 +19,24 @@ public class PhoneNumberService {
 
 	@Autowired
 	PhoneNumberRepository phoneNumberRepository;
-	
+
 	@Autowired
 	UserRepository userRepository;
-	
+
 	public PhoneNumber addNewPhoneNumber(PhoneNumber phoneNumber, int userId) {
-		 List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
-		 User user1= new User();
-		 
-		User user = userRepository.findById(userId).orElseThrow(
-					() -> new EntityNotFoundException("the user with id " + userId + " was not found"));
-		
+		List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
+		User user1 = new User();
+
+		User user = userRepository.findById(userId)
+				.orElseThrow(() -> new EntityNotFoundException("the user with id " + userId + " was not found"));
+
 		phoneNumber.setUser(user);
-		
+
 		PhoneNumber newPhoneNumber = phoneNumberRepository.save(phoneNumber);
-		
+
 		phoneNumbers.add(newPhoneNumber);
 		user1.setPhoneNumbers(phoneNumbers);
-		
+
 		return newPhoneNumber;
 	}
 
@@ -47,5 +47,5 @@ public class PhoneNumberService {
 		existingPhoneNumber.setNumber(phoneNumber.getNumber());
 		return phoneNumberRepository.save(existingPhoneNumber);
 	}
-	
+
 }

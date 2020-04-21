@@ -11,30 +11,28 @@ import userService.repositories.UserRepository;
 
 @Service
 public class UserService {
-	
+
 	@Autowired
 	UserRepository userRepository;
-	
+
 	public User createUser(User user) {
 		return userRepository.save(user);
 	}
 
 	public String deleteUser(int userId) {
-			userRepository.delete(userRepository.findById(userId).orElseThrow(
-						() -> new EntityNotFoundException("the user with id " + userId + " was not found")));
-				return "User with id " + userId + " deleted";
-			}
-	
-	
+		userRepository.delete(userRepository.findById(userId)
+				.orElseThrow(() -> new EntityNotFoundException("the user with id " + userId + " was not found")));
+		return "User with id " + userId + " deleted";
+	}
+
 	public User getUserById(@Positive int id) {
-		return userRepository.findById(id).orElseThrow(
-				() -> new EntityNotFoundException("the user with id " + id + " was not found"));
+		return userRepository.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException("the user with id " + id + " was not found"));
 	}
 
 	public User getUserByName(String firstName, String lastName) {
-		return userRepository.findByFirstNameAndLastName(firstName, lastName).orElseThrow(
-				() -> new EntityNotFoundException("the user with name " +firstName +" was not found"));
+		return userRepository.findByFirstNameAndLastName(firstName, lastName)
+				.orElseThrow(() -> new EntityNotFoundException("the user with name " + firstName + " was not found"));
 	}
-
 
 }

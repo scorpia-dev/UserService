@@ -28,5 +28,5 @@ public class UserServiceApplication {
 		messageSource.setDefaultEncoding("UTF-8");
 		return messageSource;
 	}
-	
+
 }

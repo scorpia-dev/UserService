@@ -16,7 +16,6 @@ import org.springframework.validation.annotation.Validated;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
-//import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -25,28 +24,27 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Email {
 
-	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@NotEmpty(message = "{mail.notEmpty}")
 	@Column(unique = true)
+	@javax.validation.constraints.Email
 	private String mail;
-	
+
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-	@JoinColumn(name="userId",nullable = false)
-    private User user;
+	@JoinColumn(name = "userId", nullable = false)
+	private User user;
 
-	   public int getUser_id(){
-	        return user.getId();
-	    }
+	public int getUser_id() {
+		return user.getId();
+	}
 
-public Email(String mail, User user) {
+	public Email(String mail, User user) {
 		this.mail = mail;
 		this.user = user;
-}
+	}
 
-	
 }

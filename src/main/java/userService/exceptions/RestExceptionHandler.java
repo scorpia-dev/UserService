@@ -1,11 +1,7 @@
 package userService.exceptions;
 
-import java.util.ArrayList;
-
 import javax.persistence.EntityNotFoundException;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -28,12 +24,7 @@ public class RestExceptionHandler {
 	@ExceptionHandler(ConstraintViolationException.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException e) {
-		ArrayList<String> errors = new ArrayList<String>();
-		for (ConstraintViolation<?> violation : e.getConstraintViolations()) {
-			errors.add(violation.getRootBeanClass().getName() + " " + violation.getPropertyPath() + ": "
-					+ violation.getMessage());
-		}
-		return new ResponseEntity<>("not valid due to validation error: " + errors, HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>("not valid due to :" + e, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -56,11 +47,7 @@ public class RestExceptionHandler {
 	@ExceptionHandler(EntityNotFoundException.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	ResponseEntity<?> handleNotFoundException(EntityNotFoundException e) {
-		return new ResponseEntity<>("not valid due to validation error: " + e.getMessage(),
-				HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>("not valid due to validation error: " + e.getMessage(), HttpStatus.NOT_FOUND);
 	}
-	
-	
-
 
 }

@@ -37,26 +37,24 @@ public class User {
 	}
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name ="userId")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "userId")
 	private int id;
 
 	@Pattern(regexp = "^[\\p{L} .'-]+$", message = "a name can only contain letters and spaces")
 	@Size(min = 1, max = 30)
 	@NotEmpty(message = "{firstName.notEmpty}")
 	private String firstName;
-	
+
 	@Pattern(regexp = "^[\\p{L} .'-]+$", message = "a name can only contain letters and spaces")
 	@Size(min = 1, max = 30)
 	@NotEmpty(message = "{lastName.notEmpty}")
 	private String lastName;
 
-
-   
-    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private List<Email> emails = new ArrayList<Email>();
-	
-    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.PERSIST)
-	 private List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
+
+	@OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.PERSIST)
+	private List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
 
 }

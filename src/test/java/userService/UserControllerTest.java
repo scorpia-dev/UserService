@@ -11,9 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
@@ -49,7 +47,6 @@ import userService.service.UserService;
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class UserControllerTest {
 
-	
 	@Autowired
 	private MockMvc mvc;
 
@@ -58,32 +55,32 @@ public class UserControllerTest {
 
 	@Autowired
 	ObjectMapper objectMapper;
-	
+
 	User user;
-	
-	 private List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
-	 private List<Email> emails = new ArrayList<Email>();
-	 
+
+	private List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
+	private List<Email> emails = new ArrayList<Email>();
+
 	@BeforeEach
-	public void setUp() throws Exception {
-		user = new User("Nick", "Prendergast", emails, phoneNumbers );
+	public void setUp() {
+		user = new User("Nick", "Prendergast", emails, phoneNumbers);
 	}
-	
+
 	@Transactional
 	@Test
 	public void createUserTest() throws Exception {
 
 		String json = objectMapper.writeValueAsString(user);
 
-		mvc.perform(post("/user").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
-				.content(json))
+		mvc.perform(
+				post("/user").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).content(json))
 
 				.andExpect(status().isOk()).andDo(print()).andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
 				.andExpect(MockMvcResultMatchers.jsonPath("firstName").value("Nick"))
 				.andExpect(MockMvcResultMatchers.jsonPath("lastName").value("Prendergast"))
 				.andExpect(MockMvcResultMatchers.jsonPath("emails", IsEmptyCollection.empty()))
 				.andExpect(MockMvcResultMatchers.jsonPath("phoneNumbers", IsEmptyCollection.empty()));
-		
+
 		User newUser = userService.getUserById(1);
 		assertThat(newUser.getId() == 1);
 		assertThat(newUser.getFirstName().equals("Nick"));
@@ -91,27 +88,29 @@ public class UserControllerTest {
 		assertThat(newUser.getEmails() == IsEmptyCollection.empty());
 		assertThat(newUser.getPhoneNumbers() == IsEmptyCollection.empty());
 	}
-	
+
 	@Transactional
 	@Test
 	public void deleteUserTest() throws Exception {
-		userService.createUser(user);
+		String json = objectMapper.writeValueAsString(user);
+
+		mvc.perform(
+				post("/user").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).content(json));
 
 		mvc.perform(delete("/user/id/{userId}", 1).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andDo(print()).andExpect(content().string(containsString("User with id 1 deleted")));
-		
+
 		EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class, () -> userService.getUserById(1));
 		assertTrue(thrown.getMessage().contains("the user with id 1 was not found"));
 	}
-	
+
 	@Transactional
 	@Test
 	public void getUserByIdTest() throws Exception {
 		userService.createUser(user);
 
 		mvc.perform(get("/user/id/{userId}", 1).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-				.andDo(print())
-				.andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
+				.andDo(print()).andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
 				.andExpect(MockMvcResultMatchers.jsonPath("firstName").value("Nick"))
 				.andExpect(MockMvcResultMatchers.jsonPath("lastName").value("Prendergast"))
 				.andExpect(MockMvcResultMatchers.jsonPath("emails", IsEmptyCollection.empty()))
@@ -119,15 +118,15 @@ public class UserControllerTest {
 
 		assertTrue(userService.getUserById(1) == user);
 	}
-	
+
 	@Transactional
 	@Test
 	public void getUserByNameTest() throws Exception {
 		userService.createUser(user);
 
-		mvc.perform(get("/user/name/{firstName}/{lastName}", "Nick", "Prendergast").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-				.andDo(print())
-				.andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
+		mvc.perform(
+				get("/user/name/{firstName}/{lastName}", "Nick", "Prendergast").contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk()).andDo(print()).andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
 				.andExpect(MockMvcResultMatchers.jsonPath("firstName").value("Nick"))
 				.andExpect(MockMvcResultMatchers.jsonPath("lastName").value("Prendergast"))
 				.andExpect(MockMvcResultMatchers.jsonPath("emails", IsEmptyCollection.empty()))
@@ -135,6 +134,5 @@ public class UserControllerTest {
 
 		assertTrue(userService.getUserByName("Nick", "Prendergast") == user);
 	}
-	
-	
+
 }

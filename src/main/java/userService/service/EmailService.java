@@ -19,36 +19,36 @@ public class EmailService {
 
 	@Autowired
 	EmailRepository emailRepository;
-	
+
 	@Autowired
 	UserRepository userRepository;
-	
+
 	public Email addNewEmail(Email email, int userId) {
 		List<Email> emails1 = new ArrayList<Email>();
 		User user1 = new User();
-		
-		User user = userRepository.findById(userId).orElseThrow(
-				() -> new EntityNotFoundException("the user with id " + userId + " was not found"));
-		
+
+		User user = userRepository.findById(userId)
+				.orElseThrow(() -> new EntityNotFoundException("the user with id " + userId + " was not found"));
+
 		email.setUser(user);
 		Email newEmail = emailRepository.save(email);
-		
+
 		emails1.add(newEmail);
 		user1.setEmails(emails1);
 		return newEmail;
-}
-	
+	}
+
 	public Email updateEmail(Email mail, @Positive int mailId) {
-		Email existingMail = emailRepository.findById(mailId).orElseThrow(
-				() -> new EntityNotFoundException("the email with id " + mailId + " was not found"));
-		
+		Email existingMail = emailRepository.findById(mailId)
+				.orElseThrow(() -> new EntityNotFoundException("the email with id " + mailId + " was not found"));
+
 		existingMail.setMail(mail.getMail());
 		return emailRepository.save(existingMail);
 	}
-	
+
 	public Email getEmailById(int id) {
-		return emailRepository.findById(id).orElseThrow(
-				() -> new EntityNotFoundException("the email with id " + id + " was not found"));
+		return emailRepository.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException("the email with id " + id + " was not found"));
 	}
-	
+
 }

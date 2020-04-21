@@ -21,20 +21,17 @@ public class PhoneController {
 
 	@Autowired
 	PhoneNumberService phoneNumberService;
-	
-	
+
 	@PutMapping("/updatePhoneNumber/{phoneNumberId}")
 	public PhoneNumber updateExistingPhoneNumber(@PathVariable @Positive int phoneNumberId,
-			@RequestBody @Validated PhoneNumber phoneNumber) {
+			@RequestBody @Valid PhoneNumber phoneNumber) {
 		return phoneNumberService.updatePhoneNumber(phoneNumber, phoneNumberId);
-	}	
-	
+	}
 
-	
 	@PutMapping("/addNewPhoneNumber/{userId}")
-	public PhoneNumber addNewPhoneNumber(@PathVariable int userId, @Valid @RequestBody PhoneNumber phoneNumber) {
+	public PhoneNumber addNewPhoneNumber(@PathVariable @Positive int userId,
+			@Valid @RequestBody PhoneNumber phoneNumber) {
 		return phoneNumberService.addNewPhoneNumber(phoneNumber, userId);
 	}
-	
-}
 
+}

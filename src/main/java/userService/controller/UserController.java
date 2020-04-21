@@ -15,41 +15,31 @@ import org.springframework.web.bind.annotation.RestController;
 import userService.model.User;
 import userService.service.UserService;
 
-
 @RequestMapping("/user")
 @RestController
 @Validated
 public class UserController {
-	
+
 	@Autowired
 	UserService userService;
-	
-
 
 	@PostMapping
 	public User createUser(@Validated @RequestBody User user) {
 		return userService.createUser(user);
 	}
-	
+
 	@DeleteMapping("/id/{userId}")
-	public String deleteUser(@PathVariable int userId) {
+	public String deleteUser(@PathVariable @Positive int userId) {
 		return userService.deleteUser(userId);
 	}
-	
-		
+
 	@GetMapping("/id/{userId}")
 	public User getUserById(@PathVariable @Positive int userId) {
 		return userService.getUserById(userId);
 	}
-	
+
 	@GetMapping("/name/{firstName}/{lastName}")
 	public User getUserByName(@PathVariable String firstName, @PathVariable String lastName) {
 		return userService.getUserByName(firstName, lastName);
 	}
 }
-
-
-
-
-
-

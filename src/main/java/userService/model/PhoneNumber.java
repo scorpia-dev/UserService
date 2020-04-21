@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 import org.springframework.validation.annotation.Validated;
 
@@ -23,27 +24,28 @@ import lombok.NoArgsConstructor;
 @Validated
 @NoArgsConstructor
 public class PhoneNumber {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-		
+
 	@NotEmpty(message = "{number.notEmpty}")
+	@Pattern(regexp = "(^$|[0-9]{11})", message = "Phone number must be 11 digits")
 	@Column(unique = true)
 	private String number;
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-	@JoinColumn(name="userId",nullable = false)
-    private User user;
+	@JoinColumn(name = "userId", nullable = false)
+	private User user;
 
-	   public int getUser_id(){
-	        return user.getId();
-	    }
+	public int getUser_id() {
+		return user.getId();
+	}
 
 	public PhoneNumber(String number, User user) {
 		this.number = number;
 		this.user = user;
-}
+	}
 
 }

@@ -39,28 +39,27 @@ import userService.service.UserService;
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class EmailControllerTest {
 
-	
 	@Autowired
 	private MockMvc mvc;
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	EmailService emailService;
 
 	@Autowired
 	ObjectMapper objectMapper;
-	
+
 	User user;
-	 private List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
-	 private List<Email> emails = new ArrayList<Email>();
-	 
+	private List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
+	private List<Email> emails = new ArrayList<Email>();
+
 	@BeforeEach
 	public void setUp() throws Exception {
-		user = new User("Nick", "Prendergast", emails, phoneNumbers );
+		user = new User("Nick", "Prendergast", emails, phoneNumbers);
 	}
-		
+
 	@Transactional
 	@Test
 	public void addNewEmailTest() throws Exception {
@@ -71,14 +70,14 @@ public class EmailControllerTest {
 
 		mvc.perform(post("/user").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
 				.content(userJson));
-			
-		mvc.perform(put("/email/addNewEmail/1").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
-				.content(emailJson))
-				.andExpect(status().isOk()).andDo(print()).andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
+
+		mvc.perform(put("/email/addNewEmail/1").contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON).content(emailJson)).andExpect(status().isOk()).andDo(print())
+				.andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
 				.andExpect(MockMvcResultMatchers.jsonPath("mail").value("test@mail.com"))
 				.andExpect(MockMvcResultMatchers.jsonPath("user_id").value(1));
 	}
-	
+
 	@Transactional
 	@Test
 	public void addUpdateEmailTest() throws Exception {
@@ -89,23 +88,21 @@ public class EmailControllerTest {
 
 		mvc.perform(post("/user").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
 				.content(userJson));
-		
-		mvc.perform(put("/email/addNewEmail/1").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
-				.content(emailJson))
-				.andExpect(status().isOk()).andDo(print()).andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
+
+		mvc.perform(put("/email/addNewEmail/1").contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON).content(emailJson)).andExpect(status().isOk()).andDo(print())
+				.andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
 				.andExpect(MockMvcResultMatchers.jsonPath("mail").value("test@mail.com"))
 				.andExpect(MockMvcResultMatchers.jsonPath("user_id").value(1));
-		
+
 		Email email1 = new Email("updated@mail.com", user);
 		String updatedEmailJson = objectMapper.writeValueAsString(email1);
-		
-		mvc.perform(put("/email/updateEmail/1").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
-				.content(updatedEmailJson))
-				.andExpect(status().isOk()).andDo(print()).andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
+
+		mvc.perform(put("/email/updateEmail/1").contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON).content(updatedEmailJson)).andExpect(status().isOk()).andDo(print())
+				.andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
 				.andExpect(MockMvcResultMatchers.jsonPath("mail").value("updated@mail.com"))
 				.andExpect(MockMvcResultMatchers.jsonPath("user_id").value(1));
 	}
 
-	
-	
 }

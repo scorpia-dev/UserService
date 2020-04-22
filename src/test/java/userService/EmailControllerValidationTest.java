@@ -58,7 +58,7 @@ public class EmailControllerValidationTest {
 
 		String json = objectMapper.writeValueAsString(email);
 
-		mvc.perform(put("/email/addNewEmail/1").contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(put("/email/add/1").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isBadRequest()).andDo(print())
 				.andExpect(content().string(containsString(
 						"not valid due to validation error: mail: must be a well-formed email address")));
@@ -71,7 +71,7 @@ public class EmailControllerValidationTest {
 
 		String emailJson = objectMapper.writeValueAsString(email);
 
-		mvc.perform(put("/email/addNewEmail/2").contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(put("/email/add/2").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).content(emailJson)).andExpect(status().isNotFound()).andDo(print())
 				.andExpect(content()
 						.string(containsString("not valid due to validation error: the user with id 2 was not found")));
@@ -86,10 +86,10 @@ public class EmailControllerValidationTest {
 
 		String json = objectMapper.writeValueAsString(email);
 
-		mvc.perform(put("/email/addNewEmail/1").contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(put("/email/add/1").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isOk());
 
-		mvc.perform(put("/email/addNewEmail/1").contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(put("/email/add/1").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isInternalServerError())
 				.andDo(print()).andExpect(content().string(containsString(
 						"not valid due to :org.hibernate.exception.ConstraintViolationException: could not execute statement")));
@@ -102,7 +102,7 @@ public class EmailControllerValidationTest {
 
 		String emailJson = objectMapper.writeValueAsString(email);
 
-		mvc.perform(put("/email/updateEmail/2").contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(put("/email/update/2").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).content(emailJson)).andExpect(status().isNotFound()).andDo(print())
 				.andExpect(content().string(
 						containsString("not valid due to validation error: the email with id 2 was not found")));
@@ -115,7 +115,7 @@ public class EmailControllerValidationTest {
 
 		String emailJson = objectMapper.writeValueAsString(email);
 
-		mvc.perform(put("/email/updateEmail/1").contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(put("/email/update/1").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).content(emailJson)).andExpect(status().isBadRequest())
 				.andDo(print()).andExpect(content().string(containsString(
 						"not valid due to validation error: mail: must be a well-formed email address")));

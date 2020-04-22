@@ -58,7 +58,7 @@ public class PhoneNumberControllerValidationTest {
 
 		String json = objectMapper.writeValueAsString(phoneNumber);
 
-		mvc.perform(put("/phoneNumber/addNewPhoneNumber/1").contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(put("/phonenumber/add/1").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isBadRequest()).andDo(print())
 				.andExpect(content().string(
 						containsString("not valid due to validation error: number: Phone number must be 11 digits")));
@@ -72,10 +72,10 @@ public class PhoneNumberControllerValidationTest {
 		PhoneNumber phoneNumber = new PhoneNumber("12345678910", user);
 
 		String json = objectMapper.writeValueAsString(phoneNumber);
-		mvc.perform(put("/phoneNumber/addNewPhoneNumber/1").contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(put("/phonenumber/add/1").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isOk());
 
-		mvc.perform(put("/phoneNumber/addNewPhoneNumber/1").contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(put("/phonenumber/add/1").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isInternalServerError())
 				.andDo(print()).andExpect(content().string(containsString(
 						"not valid due to :org.hibernate.exception.ConstraintViolationException: could not execute statement")));
@@ -88,7 +88,7 @@ public class PhoneNumberControllerValidationTest {
 
 		String json = objectMapper.writeValueAsString(phoneNumber);
 
-		mvc.perform(put("/phoneNumber/addNewPhoneNumber/2").contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(put("/phonenumber/add/2").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isNotFound()).andDo(print())
 				.andExpect(content()
 						.string(containsString("not valid due to validation error: the user with id 2 was not found")));
@@ -101,7 +101,7 @@ public class PhoneNumberControllerValidationTest {
 
 		String json = objectMapper.writeValueAsString(phoneNumber);
 
-		mvc.perform(put("/phoneNumber/updatePhoneNumber/2").contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(put("/phonenumber/update/2").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isNotFound()).andDo(print())
 				.andExpect(content().string(
 						containsString("not valid due to validation error: the phoneNumber with id 2 was not found")));
@@ -114,7 +114,7 @@ public class PhoneNumberControllerValidationTest {
 
 		String json = objectMapper.writeValueAsString(phoneNumber);
 
-		mvc.perform(put("/phoneNumber/updatePhoneNumber/1").contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(put("/phonenumber/update/1").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isBadRequest()).andDo(print())
 				.andExpect(content().string(
 						containsString("not valid due to validation error: number: Phone number must be 11 digits")));

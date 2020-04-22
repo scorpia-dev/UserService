@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import userService.model.PhoneNumber;
 import userService.service.PhoneNumberService;
 
-@RequestMapping("/phoneNumber")
+@RequestMapping("/phonenumber")
 @RestController
 @Validated
 public class PhoneController {
@@ -22,13 +22,13 @@ public class PhoneController {
 	@Autowired
 	PhoneNumberService phoneNumberService;
 
-	@PutMapping("/updatePhoneNumber/{phoneNumberId}")
+	@PutMapping("/update/{phoneNumberId}")
 	public PhoneNumber updateExistingPhoneNumber(@PathVariable @Positive int phoneNumberId,
 			@RequestBody @Valid PhoneNumber phoneNumber) {
 		return phoneNumberService.updatePhoneNumber(phoneNumber, phoneNumberId);
 	}
 
-	@PutMapping("/addNewPhoneNumber/{userId}")
+	@PutMapping("/add/{userId}")
 	public PhoneNumber addNewPhoneNumber(@PathVariable @Positive int userId,
 			@Valid @RequestBody PhoneNumber phoneNumber) {
 		return phoneNumberService.addNewPhoneNumber(phoneNumber, userId);

@@ -71,7 +71,7 @@ public class EmailControllerTest {
 		mvc.perform(post("/user").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
 				.content(userJson));
 
-		mvc.perform(put("/email/addNewEmail/1").contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(put("/email/add/1").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).content(emailJson)).andExpect(status().isOk()).andDo(print())
 				.andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
 				.andExpect(MockMvcResultMatchers.jsonPath("mail").value("test@mail.com"))
@@ -89,7 +89,7 @@ public class EmailControllerTest {
 		mvc.perform(post("/user").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
 				.content(userJson));
 
-		mvc.perform(put("/email/addNewEmail/1").contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(put("/email/add/1").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).content(emailJson)).andExpect(status().isOk()).andDo(print())
 				.andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
 				.andExpect(MockMvcResultMatchers.jsonPath("mail").value("test@mail.com"))
@@ -98,7 +98,7 @@ public class EmailControllerTest {
 		Email email1 = new Email("updated@mail.com", user);
 		String updatedEmailJson = objectMapper.writeValueAsString(email1);
 
-		mvc.perform(put("/email/updateEmail/1").contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(put("/email/update/1").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).content(updatedEmailJson)).andExpect(status().isOk()).andDo(print())
 				.andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
 				.andExpect(MockMvcResultMatchers.jsonPath("mail").value("updated@mail.com"))

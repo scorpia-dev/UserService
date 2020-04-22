@@ -125,7 +125,7 @@ public class UserControllerTest {
 		userService.createUser(user);
 
 		mvc.perform(
-				get("/user/name/{firstName}/{lastName}", "Nick", "Prendergast").contentType(MediaType.APPLICATION_JSON))
+				get("/user/name/{firstname}/{lastname}", "Nick", "Prendergast").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk()).andDo(print()).andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
 				.andExpect(MockMvcResultMatchers.jsonPath("firstName").value("Nick"))
 				.andExpect(MockMvcResultMatchers.jsonPath("lastName").value("Prendergast"))

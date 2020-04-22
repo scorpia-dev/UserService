@@ -71,7 +71,7 @@ public class PhoneNumberControllerTest {
 		mvc.perform(post("/user").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
 				.content(userJson));
 
-		mvc.perform(put("/phoneNumber/addNewPhoneNumber/1").contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(put("/phonenumber/add/1").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).content(phoneNumberJson)).andExpect(status().isOk()).andDo(print())
 				.andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
 				.andExpect(MockMvcResultMatchers.jsonPath("number").value("12345678910"))
@@ -91,13 +91,13 @@ public class PhoneNumberControllerTest {
 		mvc.perform(post("/user").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
 				.content(userJson));
 
-		mvc.perform(put("/phoneNumber/addNewPhoneNumber/1").contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(put("/phonenumber/add/1").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).content(phoneNumberJson)).andExpect(status().isOk()).andDo(print())
 				.andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
 				.andExpect(MockMvcResultMatchers.jsonPath("number").value("12345678910"))
 				.andExpect(MockMvcResultMatchers.jsonPath("user_id").value(1));
 
-		mvc.perform(put("/phoneNumber/updatePhoneNumber/1").contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(put("/phonenumber/update/1").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON).content(updatedPhoneNumberJson)).andExpect(status().isOk())
 				.andDo(print()).andExpect(MockMvcResultMatchers.jsonPath("id").value(1))
 				.andExpect(MockMvcResultMatchers.jsonPath("number").value("01987654321"))

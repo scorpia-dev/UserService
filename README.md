@@ -38,7 +38,7 @@ POST - http://localhost:8080/user
 ```JSON
 {
     "firstName": "<first name here>",
-    "lastName": "last name here",
+    "lastName": "last name here"
 }
 ```
 

@@ -38,7 +38,7 @@ POST - http://localhost:8080/user
 ```JSON
 {
     "firstName": "<first name here>",
-    "lastName": "last name here",
+    "lastName": "last name here"
 }
 ```
 
@@ -101,6 +101,7 @@ PUT - http://localhost:8080/phonenumber/update/{phoneNumberId} i.e. http://local
 
 
 ### Spec -
+------
 * Accepts JSON 
 * Response in JSON 
 * JDK8 or higher

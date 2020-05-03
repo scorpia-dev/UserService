@@ -28,10 +28,12 @@ public class EmailService {
 		User user = userRepository.findById(userId)
 				.orElseThrow(() -> new EntityNotFoundException("the user with id " + userId + " was not found"));
 
+		//tie user to email
 		email.setUser(user);
 		Email newEmail = emailRepository.save(email);
 
 		emails1.add(newEmail);
+		//tie email to user
 		user1.setEmails(emails1);
 		return newEmail;
 	}

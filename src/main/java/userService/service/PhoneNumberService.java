@@ -28,11 +28,13 @@ public class PhoneNumberService {
 		User user = userRepository.findById(userId)
 				.orElseThrow(() -> new EntityNotFoundException("the user with id " + userId + " was not found"));
 
+		//tie user to phonenumber
 		phoneNumber.setUser(user);
 
 		PhoneNumber newPhoneNumber = phoneNumberRepository.save(phoneNumber);
 
 		phoneNumbers.add(newPhoneNumber);
+		//tie phoneNumber to user
 		user1.setPhoneNumbers(phoneNumbers);
 
 		return newPhoneNumber;

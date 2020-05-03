@@ -14,6 +14,7 @@ public class UserServiceApplication {
 		SpringApplication.run(UserServiceApplication.class, args);
 	}
 
+
 	@Bean
 	public LocalValidatorFactoryBean getValidator() {
 		LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();

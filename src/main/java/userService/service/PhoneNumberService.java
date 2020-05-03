@@ -1,18 +1,16 @@
 package userService.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.EntityNotFoundException;
-import javax.validation.constraints.Positive;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import userService.model.PhoneNumber;
 import userService.model.User;
 import userService.repositories.PhoneNumberRepository;
 import userService.repositories.UserRepository;
+
+import javax.persistence.EntityNotFoundException;
+import javax.validation.constraints.Positive;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PhoneNumberService {

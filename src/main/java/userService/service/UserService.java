@@ -1,13 +1,12 @@
 package userService.service;
 
-import javax.persistence.EntityNotFoundException;
-import javax.validation.constraints.Positive;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import userService.model.User;
 import userService.repositories.UserRepository;
+
+import javax.persistence.EntityNotFoundException;
+import javax.validation.constraints.Positive;
 
 @Service
 public class UserService {

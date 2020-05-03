@@ -2,6 +2,7 @@ package userService.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
@@ -32,9 +33,11 @@ public class User {
 	@NotEmpty(message = "{lastName.notEmpty}")
 	private String lastName;
 
+	@ToString.Exclude
 	@OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.PERSIST)
 	private List<Email> emails = new ArrayList<Email>();
 
+	@ToString.Exclude
 	@OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.PERSIST)
 	private List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
 

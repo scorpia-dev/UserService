@@ -12,7 +12,9 @@ import userService.model.PhoneNumber;
 import userService.model.User;
 import userService.repositories.UserRepository;
 import userService.service.PhoneNumberService;
+import userService.service.UserService;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +30,12 @@ public class PhoneNumberServiceTest {
 	@Autowired
 	UserRepository userRepository;
 
+	@Autowired
+	UserService userService;
+
+	@Autowired
+	EntityManager entityManager;
+
 	User user;
 	private List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
 	private List<Email> emails = new ArrayList<Email>();
@@ -40,31 +48,29 @@ public class PhoneNumberServiceTest {
 	@Transactional
 	@Test
 	public void addNewPhoneNumberTest() {
+		User user1 = userService.createUser(user);
+		PhoneNumber phoneNumber = new PhoneNumber("12345678910", user1);
+		phoneNumberService.addNewPhoneNumber(phoneNumber, user1.getId());
+		entityManager.refresh(user1);
 
-		PhoneNumber phoneNumber = new PhoneNumber("12345678910", user);
-
-		User newUser = userRepository.save(user);
-		newUser.getPhoneNumbers().add(phoneNumberService.addNewPhoneNumber(phoneNumber, newUser.getId()));
-
-		assertTrue(newUser.getPhoneNumbers().size() == 1);
+		assertTrue(user1.getPhoneNumbers().size() == 1);
 	}
 
 	@Transactional
 	@Test
 	public void addMultipleNewPhoneNumbersTest() {
-
 		PhoneNumber phoneNumber = new PhoneNumber("23456789101", user);
 		PhoneNumber phoneNumber1 = new PhoneNumber("19876543210", user);
 
 		User newUser = userRepository.save(user);
 
-		newUser.getPhoneNumbers().add(phoneNumberService.addNewPhoneNumber(phoneNumber, newUser.getId()));
-		newUser.getPhoneNumbers().add(phoneNumberService.addNewPhoneNumber(phoneNumber1, newUser.getId()));
+		phoneNumberService.addNewPhoneNumber(phoneNumber, newUser.getId());
+		phoneNumberService.addNewPhoneNumber(phoneNumber1, newUser.getId());
+		entityManager.refresh(newUser);
 
 		assertTrue(newUser.getPhoneNumbers().get(0).getNumber().equals("23456789101"));
 		assertTrue(newUser.getPhoneNumbers().get(1).getNumber().equals("19876543210"));
 		assertTrue(newUser.getPhoneNumbers().size() == 2);
-
 	}
 
 	@Transactional
@@ -74,10 +80,11 @@ public class PhoneNumberServiceTest {
 		PhoneNumber phoneNumber1 = new PhoneNumber("19876543210", user);
 
 		User newUser = userRepository.save(user);
-		newUser.getPhoneNumbers().add(phoneNumberService.addNewPhoneNumber(phoneNumber, newUser.getId()));
-		int phoneNumberId = newUser.getPhoneNumbers().get(0).getId();
+		phoneNumberService.addNewPhoneNumber(phoneNumber, newUser.getId());
+		entityManager.refresh(newUser);
 
-		phoneNumberService.updatePhoneNumber(phoneNumber1, phoneNumberId);
+		int phoneId = newUser.getPhoneNumbers().get(0).getId();
+		phoneNumberService.updatePhoneNumber(phoneNumber1, phoneId);
 
 		assertTrue(newUser.getPhoneNumbers().get(0).getNumber().equals("19876543210"));
 		assertTrue(newUser.getPhoneNumbers().size() == 1);

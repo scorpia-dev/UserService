@@ -14,6 +14,7 @@ import userService.repositories.UserRepository;
 import userService.service.EmailService;
 import userService.service.UserService;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,30 +43,33 @@ public class EmailServiceTest {
 		user = new User("Nick", "Prendergast", emails, phoneNumbers);
 	}
 
+	@Autowired
+	EntityManager entityManager;
+
 	@Transactional
 	@Test
 	public void addNewEmailTest() {
+		User user1 = userService.createUser(user);
+		Email email = new Email("test@mail.com", user1);
+		emailService.addNewEmail(email, user1.getId());
 
-		Email email = new Email("test@mail.com", user);
+		entityManager.refresh(user1);
 
-		User newUser = userRepository.save(user);
-		newUser.getEmails().add(emailService.addNewEmail(email, newUser.getId()));
-
-		assertTrue(newUser.getEmails().get(0).getMail().equals("test@mail.com"));
-		assertTrue(newUser.getEmails().size() == 1);
+		assertTrue(user1.getEmails().get(0).getMail().equals("test@mail.com"));
+		assertTrue(user1.getEmails().size() == 1);
 	}
 
 	@Transactional
 	@Test
 	public void addMultipleNewEmailsTest() {
-
 		Email email = new Email("test@mail.com", user);
 		Email email1 = new Email("test2@mail.com", user);
 
 		User newUser = userRepository.save(user);
 
-		newUser.getEmails().add(emailService.addNewEmail(email, newUser.getId()));
-		newUser.getEmails().add(emailService.addNewEmail(email1, newUser.getId()));
+		emailService.addNewEmail(email, newUser.getId());
+		emailService.addNewEmail(email1, newUser.getId());
+		entityManager.refresh(newUser);
 
 		assertTrue(newUser.getEmails().get(0).getMail().equals("test@mail.com"));
 		assertTrue(newUser.getEmails().get(1).getMail().equals("test2@mail.com"));
@@ -80,10 +84,10 @@ public class EmailServiceTest {
 		Email email1 = new Email("updated@mail.com", user);
 
 		User newUser = userRepository.save(user);
-		newUser.getEmails().add(emailService.addNewEmail(email, newUser.getId()));
-		int mailId = newUser.getEmails().get(0).getId();
+		emailService.addNewEmail(email, newUser.getId());
+		entityManager.refresh(newUser);
 
-		emailService.updateEmail(email1, mailId);
+		emailService.updateEmail(email1, 1);
 
 		assertTrue(newUser.getEmails().get(0).getMail().equals("updated@mail.com"));
 		assertTrue(newUser.getEmails().size() == 1);

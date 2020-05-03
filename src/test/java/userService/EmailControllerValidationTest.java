@@ -16,6 +16,7 @@ import userService.model.PhoneNumber;
 import userService.model.User;
 import userService.service.UserService;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,9 @@ public class EmailControllerValidationTest {
 
 	@Autowired
 	ObjectMapper objectMapper;
+
+	@Autowired
+	EntityManager entityManager;
 
 	private List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
 	private List<Email> emails = new ArrayList<Email>();
@@ -77,7 +81,6 @@ public class EmailControllerValidationTest {
 
 	@Test
 	public void addDuplicateEmailTest() throws Exception {
-
 		userService.createUser(user);
 
 		Email email = new Email("test@mail.com", user);

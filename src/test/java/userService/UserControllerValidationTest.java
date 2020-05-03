@@ -43,7 +43,6 @@ public class UserControllerValidationTest {
 
 	@Test
 	public void createUserNoFirstNameTest() throws Exception {
-
 		user.setLastName("Prendergast");
 		String json = objectMapper.writeValueAsString(user);
 
@@ -55,7 +54,6 @@ public class UserControllerValidationTest {
 
 	@Test
 	public void createUserInvalidFirstNameTest() throws Exception {
-
 		user.setFirstName("23231+");
 		user.setLastName("Prendergast");
 		String json = objectMapper.writeValueAsString(user);

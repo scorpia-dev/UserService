@@ -51,7 +51,6 @@ public class PhoneNumberControllerValidationTest {
 
 	@Test
 	public void addInvalidPhoneNumberTest() throws Exception {
-
 		PhoneNumber phoneNumber = new PhoneNumber("112zcxds", user);
 
 		String json = objectMapper.writeValueAsString(phoneNumber);
@@ -64,7 +63,6 @@ public class PhoneNumberControllerValidationTest {
 
 	@Test
 	public void addDuplicatePhoneNumberTest() throws Exception {
-
 		userService.createUser(user);
 
 		PhoneNumber phoneNumber = new PhoneNumber("12345678910", user);

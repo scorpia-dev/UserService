@@ -64,7 +64,6 @@ public class UserControllerTest {
 	@Transactional
 	@Test
 	public void createUserTest() throws Exception {
-
 		String json = objectMapper.writeValueAsString(user);
 
 		mvc.perform(

@@ -9,8 +9,6 @@ import userService.repositories.UserRepository;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.Positive;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class PhoneNumberService {
@@ -22,22 +20,11 @@ public class PhoneNumberService {
 	UserRepository userRepository;
 
 	public PhoneNumber addNewPhoneNumber(PhoneNumber phoneNumber, int userId) {
-		List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
-		User user1 = new User();
-
 		User user = userRepository.findById(userId)
 				.orElseThrow(() -> new EntityNotFoundException("the user with id " + userId + " was not found"));
 
-		//tie user to phonenumber
 		phoneNumber.setUser(user);
-
-		PhoneNumber newPhoneNumber = phoneNumberRepository.save(phoneNumber);
-
-		phoneNumbers.add(newPhoneNumber);
-		//tie phoneNumber to user
-		user1.setPhoneNumbers(phoneNumbers);
-
-		return newPhoneNumber;
+		return phoneNumberRepository.save(phoneNumber);
 	}
 
 	public PhoneNumber updatePhoneNumber(PhoneNumber phoneNumber, @Positive int phoneNumberId) {

@@ -1,5 +1,6 @@
 package userService.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -35,11 +36,11 @@ public class User {
 
 	@ToString.Exclude
 	@OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.PERSIST)
-	private List<Email> emails = new ArrayList<Email>();
+	private List<Email> emails;
 
 	@ToString.Exclude
 	@OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.PERSIST)
-	private List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
+	private List<PhoneNumber> phoneNumbers;
 
 	public User(String firstName, String lastName, List<Email> emails, List<PhoneNumber> phoneNumbers) {
 		this.firstName = firstName;

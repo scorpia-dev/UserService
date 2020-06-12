@@ -114,7 +114,7 @@ Run as a Spring Boot App
 
 ### To do's
 * add a phone number validation library to accept differnt country codes etc 
-* create Swagger API document for the API
+* change phonenumber mapping.. to @ManyToMany (many users can share same phoneNumber (same households))
 
 
 

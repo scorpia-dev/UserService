@@ -2,7 +2,7 @@
 
 ## About App
 
-This is a "User" RESTful Web Service with Spring/Spring Boot/Hibernate H2 in memory database
+This is a "User" CRUD RESTful Web Service with Spring/Spring Boot/Hibernate H2 in memory database. 
 
 The Data objects are defined as followed:
 ```

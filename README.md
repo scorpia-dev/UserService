@@ -30,7 +30,7 @@ PhoneNumber:
 #### User
 ------
 
-*Create a new User*
+* **Create a new User** 
  
 ```
 POST - http://localhost:8080/user
